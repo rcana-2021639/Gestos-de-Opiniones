@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { config } from '../configs/config.js';
 import fs from 'fs';
 
-// Crear el directorio de uploads si no existe
 const createUploadDir = () => {
     if (!fs.existsSync(config.upload.uploadPath)) {
         fs.mkdirSync(config.upload.uploadPath, { recursive: true });
@@ -23,7 +22,6 @@ const storage = multer.diskStorage({
     },
 });
 
-// Filtro de archivos
 const fileFilter = (req, file, cb) => {
     if (config.upload.allowedTypes.includes(file.mimetype)) {
         cb(null, true);

@@ -25,7 +25,6 @@ export const uploadImage = async (filePath, fileName) => {
             folder: folder,
             resource_type: 'image',
             transformation: [
-                // 'limit' es para que se vea toda la foto
                 { width: 800, height: 800, crop: 'limit' }, 
                 { quality: 'auto', fetch_format: 'auto' },
             ],
@@ -84,17 +83,14 @@ export const deleteImage = async (imagePath) => {
 };
 
 export const getFullImageUrl = (imagePath) => {
-    //Si no hay imagen, devolver el avatar por defecto
     if (!imagePath) {
         return getDefaultAvatarUrl();
     }
 
-    //Si ya es una URL completa no se le agrega nada mas
     if (imagePath.startsWith('http')) {
         return imagePath;
     }
 
-    //Si por alguna razón solo es el nombre del archivo, construir la URL 
     const baseUrl = config.cloudinary.baseUrl;
     const folder = config.cloudinary.folder;
 
@@ -112,7 +108,6 @@ export const getDefaultAvatarUrl = () => {
 
 export const getDefaultAvatarPath = () => {
     const defaultPath = config.cloudinary.defaultAvatarPath;
-    // If dotenv didn't expand nested vars, build from env pieces
     if (defaultPath && defaultPath.includes('${')) {
         const folder = process.env.CLOUDINARY_FOLDER;
         const filename = process.env.CLOUDINARY_DEFAULT_AVATAR_FILENAME;
